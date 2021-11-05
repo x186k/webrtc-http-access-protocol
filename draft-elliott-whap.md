@@ -1,7 +1,7 @@
 ---
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-docname: draft-todo-yourname-protocol-latest
+title: "WebRTC HTTP Access Protocol"
+abbrev: "WHAP"
+docname: draft-elliott-whap-latest
 category: info
 
 ipr: trust200902
