@@ -1,5 +1,5 @@
 %%%
-title = "WebRTC HTTP Access Protocol"
+title = "WebRTC HTTPS Access Protocol"
 area = "General"
 #workgroup = "Network Working Group"
 
@@ -42,9 +42,9 @@ organization = "Twitch Interactive"
 
 .# Abstract
 
-This is an example of using markdown in the creation of an Internet Draft. The
-specific flavor of markdown being used is mmark version 2, created by
-Miek Gieben and available at [https://github.com/mmarkdown/mmark/](https://github.com/mmarkdown/mmark/).
+WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. WebRTC was purposely designed lacking end-to-end signalling protcols for creating WebRTC sessions. WHAP stands for WebRTC HTTPS Access Protocol. WHAP is intended to provide a simple HTTPS based signalling method for sending one-way media and data between two WebRTC participants. WHAP is unique from WHIP, another HTTPS based WebRTC signalling protocol, in that WHAP HTTPS sessions are initiated by media/data receivers, not media/data senders.
+
+
 
 {mainmatter}
 
