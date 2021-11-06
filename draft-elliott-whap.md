@@ -11,6 +11,15 @@ status = "informational"
 
 date = 2021-11-06T00:00:00Z
 
+# from kramdown examples
+ipr = "trust200902"
+area = "General"
+#workgroup = "TODO Working Group"
+keyword = ["Internet-Draft"]
+
+[pi]
+toc = "yes"
+
 [[author]]
 initials = "C."
 surname = "Elliott"
