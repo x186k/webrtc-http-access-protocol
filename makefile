@@ -16,13 +16,13 @@ all: $(TXT) $(HTML)
 
 
 %.txt: %.xml
-	xml2rfc --text -o $@ $<
+	xml2rfc --v3 --text -o $@ $<
 
 %.html: %.xml
-	xml2rfc --html -o $@ $<
+	xml2rfc --v3 --html -o $@ $<
 
 %.xml: %.md
-	kramdown-rfc2629 --v3 < $< > $@
+	mmark < $< > $@
 
 clean:
 	rm -f draft-*.txt draft-*.html draft-*.xml
