@@ -110,8 +110,13 @@ This use case includes some ascii art.  The format for this art is as follows:
 
 # Security Considerations
 
-As outlined earlier in (#usecases), there could be security issues in
-various use cases.
+WHAP requires the use of HTTPS,
+
+[RFC8826]
+Rescorla, E., "Security Considerations for WebRTC", RFC 8826, DOI 10.17487/RFC8826, January 2021, <https://www.rfc-editor.org/info/rfc8826>.
+[RFC8827]
+Rescorla, E., "WebRTC Security Architecture", RFC 8827, DOI 10.17487/RFC8827, January 2021, <https://www.rfc-editor.org/info/rfc8827>.
+
 
 # IANA Considerations
 
