@@ -133,3 +133,28 @@ This document has no Manageability Considerations yet.
 
 
 {backmatter}
+
+
+
+
+
+
+
+<reference anchor="MQTT" target="http://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html">
+   <front>
+      <title>OASIS Standard MQTT Version 5.0</title>
+      <author initials="A." surname="Banks" role="editor">
+         <organization>IBM</organization>
+      </author>
+      <author initials="E." surname="Briggs" role="editor">
+         <organization>Microsoft</organization>
+      </author>
+      <author initials="K." surname="Borgendale" role="editor">
+         <organization>IBM</organization>
+      </author>
+      <author initials="R." surname="Gupta" role="editor">
+         <organization>IBM</organization>
+      </author>
+      <date year="2017" />
+   </front>
+</reference>
