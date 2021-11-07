@@ -5,7 +5,7 @@
 # to run mmark using the Docker image.
 #
 
-SRC  := $(wildcard draft-*.md)
+SRC  := $(wildcard draft-*.md test.md)
 TXT  := $(patsubst %.md,%.txt,$(SRC))
 CWD  := `pwd`
 
