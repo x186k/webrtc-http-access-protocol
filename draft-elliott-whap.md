@@ -42,7 +42,7 @@ organization = "Twitch Interactive"
 
 .# Abstract
 
-WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. WebRTC was purposely designed lacking end-to-end signalling protcols for creating WebRTC sessions. WHAP stands for WebRTC HTTPS Access Protocol. WHAP is intended to provide a simple HTTPS based signalling method for sending one-way media and data between two WebRTC participants. WHAP is unique from WHIP, another HTTPS based WebRTC signalling protocol, in that WHAP HTTPS sessions are initiated by media/data receivers, not media/data senders.
+WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. WebRTC was purposely designed lacking end-to-end signaling protcols for creating WebRTC sessions. WHAP stands for WebRTC HTTPS Access Protocol. WHAP is intended to provide a simple HTTPS based signaling method for sending one-way media and data between two WebRTC participants. WHAP is unique from WHIP, another HTTPS based WebRTC signaling protocol, in that WHAP HTTPS sessions are initiated by media/data receivers, not media/data senders.
 
 
 
@@ -50,10 +50,41 @@ WebRTC is a set of APIs and protocols which enables real-time audio, video and d
 
 # Introduction
 
-More information can be found in [@!I-D.nottingham-for-the-users]. (An
-example of an informative reference in the middle of text. Note that
-referencing an Internet Draft involves replacing "draft-" in the name with
-"I-D.".)
+<!--
+- short problem statement
+- what webrtc is
+- sdp, answer/offer
+- lack of last-mile signaling in webrtc
+- whip
+- whap 
+
+this draft is a guide (problem statement)
+the objective of this
+the benefit of having
+comparison/why not whip?
+-->
+
+This document is intended to define a signaling protocol for WebRTC based upon HTTP and HTTPS.
+
+
+
+WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. Implementation of WebRTC in browsers is enabling a great number of new applications which require real-time exchange of audiovisual media. WebRTC also provides facilities for real-time data communication.
+
+WebRTC provides mechanisms to facilitate creating connections between WebRTC entities. In order to enable connections, WebRTC defines the use of Session Description Protocol (SDP) [@RFC8866] messages, and an Offer/Answer Model for exchanging SDPs [@RFC3264].
+
+While WebRTC specifies the usage of SDPs and an Offer/Answer model for creating connections, WebRTC does not define the precise signaling protocols over which SDPs should be exchanged [@RFC8825]. A long list of protocols have been suggested, and are in use for WebRTC signalling: SIP [@RFC3261], XMPP [@RFC6120], MQTT [@MQTT], Websockets [@RFC6455], HTTPS [@RFC2818], and others.
+
+
+   either a standards-based or proprietary protocol could be used
+   between the browser and the w
+
+tocols (e.g., SIP or the Extensible Messaging and Presence Protocol (XMPP)
+) could be used between servers, while either a standards-based or proprietary
+protocol could be used b
+
+
+
+
 
 # Conventions and Definitions
 
