@@ -80,10 +80,6 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 [@!RFC2119] [@RFC8174]
 when, and only when, they appear in all capitals, as shown here.
 
-The reader may wish to note that one of the two RFC references in the
-preceding paragraph was normative; the other was informative. These will
-be correctly identified as such in the References section below.
-
 # Background
 
 This is some background text
