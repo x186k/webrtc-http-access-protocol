@@ -74,23 +74,6 @@ Developers of AI and machine learning systems consuming audio/video can benefit 
 
 For further information on WebRTC and how signaling protocols fit into the overall scheme of WebRTC, a good place to start is [@RFC8825], "Overview: Real-Time Protocols for Browser-Based Applications"
 
-
-
-
-
-WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. Implementation of WebRTC in browsers is enabling a great number of new applications which require real-time exchange of audiovisual media. WebRTC also provides facilities for real-time data communication.
-
-WebRTC provides mechanisms to facilitate creating connections between WebRTC entities. In order to enable connections, WebRTC defines the use of Session Description Protocol (SDP)  messages, and an Offer/Answer Model for exchanging SDPs .
-
- A long list of protocols have been suggested, and are in use for WebRTC signalling: SIP [@RFC3261], XMPP [@RFC6120], MQTT [@MQTT], Websockets [@RFC6455], HTTPS [@RFC2818], and others.
-
-
-
-
-
-
-
-
 # Conventions and Definitions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
