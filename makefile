@@ -7,6 +7,7 @@
 
 SRC  := $(wildcard draft-*.md test.md)
 TXT  := $(patsubst %.md,%.txt,$(SRC))
+HTML  := $(patsubst %.md,%.html,$(SRC))
 CWD  := `pwd`
 
 # Ensure the xml2rfc cache directory exists locally
