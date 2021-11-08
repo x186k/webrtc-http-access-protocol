@@ -51,36 +51,41 @@ WebRTC is a set of APIs and protocols which enables real-time audio, video and d
 # Introduction
 
 <!--
-- short problem statement
-- what webrtc is
-- sdp, answer/offer
-- lack of last-mile signaling in webrtc
-- whip
-- whap 
-
-this draft is a guide (problem statement)
-the objective of this
-the benefit of having
+model: https://datatracker.ietf.org/doc/html/rfc8825
+goal
+background
+benefits
 comparison/why not whip?
 -->
 
-This document is intended to define a signaling protocol for WebRTC based upon HTTP and HTTPS.
+This document is intended to define a signaling protocol for WebRTC for one-way audio, video and data sessions based upon HTTP or HTTPS: WebRTC HTTP Access Protocol or "WHAP". 
+
+While WebRTC specifies the usage of SDPs [@RFC8866] and an Offer/Answer model [@RFC3264] for creating connections, WebRTC does not define the precise signaling protocols over which SDPs should be exchanged [@RFC8825]. In order to establish a WebRTC session between two WebRTC entities, a signaling protocol is usually used to exchange SDPs. 
+
+A simple HTTP/S signaling protocol for WebRTC can be beneficial for different applications. One application is that of end-user media viewer access. In this case a person might be watching real-time audio/video material via WebRTC. Another example application is composing clusters of selective forwarding units (SFUs) in order to enable large-scale real-time WebRTC broadcasting beyond the capacity of single SFU limits.  Finally, even bidirectional real-time conferencing scenarios may benefit from HTTP/S signalling: if setting up one-way audio/video streams if very simple, there may be use cases where setting up two one-way streams solves bi-directional remote viewing needs.
+
+End-users could benefit by using a browser and HTTPS signaling to view real-time media from different media providers as long as their browser application supports the same signaling protocol as the different vendors offering the real-time audio/video feeds. 
+
+Real-time audio/video media providers of course benefit by being able to more easily provide media feeds to media viewers and receiving systems.
+
+Developers and dev-ops persons could benefit by chaining SFUs together using HTTP signaling in trusted environments in order to create clusters of SFUs able to support large-scale real-time broadcasting.
+
+Developers of AI and machine learning systems consuming audio/video can benefit by using a common HTTP/S signaling protocol, as they can now ingest media from cameras and even audio/video pre-processors that might be sources from 3rd parties.
+
+For further information on WebRTC and how signaling protocols fit into the overall scheme of WebRTC, a good place to start is [@RFC8825], "Overview: Real-Time Protocols for Browser-Based Applications"
+
+
 
 
 
 WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. Implementation of WebRTC in browsers is enabling a great number of new applications which require real-time exchange of audiovisual media. WebRTC also provides facilities for real-time data communication.
 
-WebRTC provides mechanisms to facilitate creating connections between WebRTC entities. In order to enable connections, WebRTC defines the use of Session Description Protocol (SDP) [@RFC8866] messages, and an Offer/Answer Model for exchanging SDPs [@RFC3264].
+WebRTC provides mechanisms to facilitate creating connections between WebRTC entities. In order to enable connections, WebRTC defines the use of Session Description Protocol (SDP)  messages, and an Offer/Answer Model for exchanging SDPs .
 
-While WebRTC specifies the usage of SDPs and an Offer/Answer model for creating connections, WebRTC does not define the precise signaling protocols over which SDPs should be exchanged [@RFC8825]. A long list of protocols have been suggested, and are in use for WebRTC signalling: SIP [@RFC3261], XMPP [@RFC6120], MQTT [@MQTT], Websockets [@RFC6455], HTTPS [@RFC2818], and others.
+ A long list of protocols have been suggested, and are in use for WebRTC signalling: SIP [@RFC3261], XMPP [@RFC6120], MQTT [@MQTT], Websockets [@RFC6455], HTTPS [@RFC2818], and others.
 
 
-   either a standards-based or proprietary protocol could be used
-   between the browser and the w
 
-tocols (e.g., SIP or the Extensible Messaging and Presence Protocol (XMPP)
-) could be used between servers, while either a standards-based or proprietary
-protocol could be used b
 
 
 
