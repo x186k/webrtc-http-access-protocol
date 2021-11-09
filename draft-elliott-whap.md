@@ -80,56 +80,51 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 [@!RFC2119] [@RFC8174]
 when, and only when, they appear in all capitals, as shown here.
 
-# Background
+# Comparison to WHIP: WebRTC HTTP Ingress Protocol
 
-This is some background text
+WHIP is the WebRTC HTTP Ingress Protocol, an IETF draft: [@I-D.ietf-wish-whip]. 
+It is natural to ask what is the different between WHIP and WHAP? 
+We believe that WHIP and WHAP are complementary, and mostly do not compete for the same use-cases. WHAP was partly inspired by WHIP. 
+
+## WHIP is for Cloud Ingest, WHAP is for Cloud Egress
+
+The WHIP draft [@I-D.ietf-wish-whip, section Abstract] states "WebRTC based ingest of content into streaming servics and/or CDNs." 
+So, let's imagine an end-to-end real-time broadcast originating in Madrid and terminating in Los Angeles. The broadcast might start in a browser in Madrid where audio/video is carried using WebRTC. The broadcaster could alternatively be using a software tool like Open Broadcast Studio [@obs]. The broadcaster could be using WHIP from either the browser or software tool to send media to a cloud-based network for redistribution. Viewers could then use WHAP to connect from their browsers to the cloud-based network to receive and consume audio/video media.
+
 
 # Use Cases {#usecases}
 
-This section will include some use cases for our new protocol. The use
-cases conform to the guidelines found in [@!RFC7268]. (Demonstrating a
-normative reference inline.)
+There a are number of different use cases for WHAP.
 
-Note that the section heading also includes an anchor name that can be
-referenced in a cross reference later in the document, as is done in
-(#security-considerations) of this document. (Demonstrating using a
-reference to a heading without writing an actual anchor, but rather using
-the heading name in lowercase and with dashes.)
+## Content Distribution Network (CDN) to Media Viewer Access 
 
-## First use case
+If a WebRTC broadcast is originating in Madrid, and being sent (using WHIP) to a WebRTC CDN in Berlin, viewers in Los Angeles might directly access the broadcast using WHAP by dialing directly into the SFU(s) in Berlin.
 
-Some text about the first use case. (And an example of using a second level
-heading.)
+## CDN to CDN WHAP Media Access
 
-## Second use case
+WHAP could facilitate SFU to SFU streaming using an on-demand model. Let's say a broadcaster in a town in Spain initiates a WebRTC broadcast. The broadcaster might connect using WHIP to an SFU that is part of a CDN in Madrid. If the broadcast has a large number of viewers, and the CDN has many global points of presence, the CDN could direct viewers in the western US to connect to their local WHAP SFU (in say, Los Angeles), which could then WHAP-ingress-dial the SFU in Madrid in order to forward real-time media.
 
-This example includes a list:
+## Chaining of SFUs to Scale WebRTC Broadcasts
 
-- first item
-- second item
-- third item
+If a single SFU is receiving a broadcast via WHIP, it might be desirable to re-transmit that broadcast to multiple SFUs to increase the number of viewers possible. If the root receiving SFU is able to handle WHAP signaling for output streams then additional SFUs can be chained to the root SFU by using WHAP to connect to the root SFU for their ingress stream.
 
-And text below the list.
+## WebRTC Based Video Routing Switching
 
-## Third use case
+Just as SDI video routing switchers are common in live production facilities today, WebRTC video routing switchers could be very useful. One might imagine two sets of SFUs: the ingress-SFUs and the egress-SFUs. Stream senders connect (via WHIP) to the ingress of the ingress-SFUs, stream viewers would connect (via WHAP) to the egress of the egress-SFUs. Then routing connections could be made between the ingress and egress SFUs, which changes what stream viewers receive. These routing connections could be made with WHIP or WHAP. By using WHAP, the typicall model of having multiple receivers connect their sources is followed, this is usually done to simplify service discovery and address management.
 
-This use case includes some ascii art.  The format for this art is as follows:
 
-~~~ ascii-art
-        0
-       +-+
-       |A|
-       +-+
-~~~
+# Protocol Operation
 
-# Security Considerations
+## SDP Exchange Basics
 
-WHAP requires the use of HTTPS,
+## Interactive Connectivity Establishment (ICE) Rules
+## Network address translation (NAT) 
 
-[RFC8826]
-Rescorla, E., "Security Considerations for WebRTC", RFC 8826, DOI 10.17487/RFC8826, January 2021, <https://www.rfc-editor.org/info/rfc8826>.
-[RFC8827]
-Rescorla, E., "WebRTC Security Architecture", RFC 8827, DOI 10.17487/RFC8827, January 2021, <https://www.rfc-editor.org/info/rfc8827>.
+
+
+# Security Considerations {#security-considerations}
+
+Coming soon.
 
 
 # IANA Considerations
