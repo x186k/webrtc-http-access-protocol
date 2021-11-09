@@ -42,7 +42,7 @@ organization = "Twitch Interactive"
 
 .# Abstract
 
-WebRTC is a set of APIs and protocols which enables real-time audio, video and data commnications. WebRTC was purposely designed without complete end-to-end signaling protcols for creating WebRTC sessions. WHAP stands for WebRTC HTTP/S Access Protocol. WHAP is intended to provide a simple HTTP/S based signaling method for sending one-way media and data between two WebRTC participants. While inspired by and sharing some similarities with WHIP [@I-D.ietf-wish-whip], in constrast to WHIP, WHAP media receivers dial out to senders, and WHAP supports HTTP in trusted environments for cloud-native scaling of SFUs.
+WebRTC is a set of APIs and protocols which enable real-time audio, video and data commnications. WebRTC was purposely designed without complete end-to-end signaling protcols for creating WebRTC sessions. WHAP stands for WebRTC HTTP/S Access Protocol. WHAP is intended to provide a simple HTTP/S based signaling method to setup one-way media and data sessions between two WebRTC participants. While inspired by and sharing some similarities with WHIP [@I-D.ietf-wish-whip], in constrast to WHIP, WHAP media receivers dial out to senders, and WHAP supports HTTP in trusted environments for cloud-native scaling of SFUs.
 
 
 {mainmatter}
