@@ -1,3 +1,9 @@
 :80
 
+
+rewrite / /draft-elliott-whap.txt
+rewrite /a /draft-elliott-whap.html
+
 file_server
+
+
