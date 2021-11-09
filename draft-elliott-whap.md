@@ -61,9 +61,9 @@ This document is intended to define a signaling protocol for WebRTC for one-way 
 
 While WebRTC specifies the usage of SDPs [@RFC8866] and an Offer/Answer model [@RFC3264] for creating connections, WebRTC does not define the precise signaling protocols over which SDPs should be exchanged [@RFC8825]. In order to establish a WebRTC session between two WebRTC entities, a signaling protocol is usually used to exchange SDPs. 
 
-A simple HTTP/S signaling protocol for WebRTC can be beneficial for different applications. One application is that of end-user media viewer access. In this case a person might be watching real-time audio/video material via WebRTC. Another example application is composing clusters of selective forwarding units (SFUs) in order to enable large-scale real-time WebRTC broadcasting beyond the capacity of single SFU limits.  Finally, even bidirectional real-time conferencing scenarios may benefit from HTTP/S signalling: if setting up one-way audio/video streams if very simple, there may be use cases where setting up two one-way streams solves bi-directional remote viewing needs.
+A simple HTTP/S signaling protocol for WebRTC can be beneficial for different applications. One application is that of end-user media viewer access. In this case a person might be watching real-time audio/video material via WebRTC. Another example application is composing clusters of selective forwarding units (SFUs) in order to enable large-scale real-time WebRTC broadcasting beyond the capacity of single SFU limits.  Finally, even bidirectional real-time conferencing scenarios may benefit from HTTP/S signalling: if setting up one-way audio/video streams is very simple, there may be use cases where setting up two one-way streams solves bi-directional remote viewing needs.
 
-End-users could benefit by using a browser and HTTPS signaling to view real-time media from different media providers as long as their browser application supports the same signaling protocol as the different vendors offering the real-time audio/video feeds. 
+End-users can benefit by using a browser and HTTPS signaling to view real-time media from different media providers as long as their browser application supports the same signaling protocol as the different vendors offering the real-time audio/video feeds. 
 
 Real-time audio/video media providers of course benefit by being able to more easily provide media feeds to media viewers and receiving systems.
 
@@ -82,14 +82,14 @@ when, and only when, they appear in all capitals, as shown here.
 
 # Comparison to WHIP: WebRTC HTTP Ingress Protocol
 
-WHIP is the WebRTC HTTP Ingress Protocol, an IETF draft: [@I-D.ietf-wish-whip]. 
+WHIP is the WebRTC HTTP Ingress Protocol, described in the IETF draft: [@I-D.ietf-wish-whip]. 
 It is natural to ask what is the different between WHIP and WHAP? 
 We believe that WHIP and WHAP are complementary, and mostly do not compete for the same use-cases. WHAP was partly inspired by WHIP. 
 
 ## WHIP is for Cloud Ingest, WHAP is for Cloud Egress
 
-The WHIP draft [@I-D.ietf-wish-whip, section Abstract] states "WebRTC based ingest of content into streaming servics and/or CDNs." 
-So, let's imagine an end-to-end real-time broadcast originating in Madrid and terminating in Los Angeles. The broadcast might start in a browser in Madrid where audio/video is carried using WebRTC. The broadcaster could alternatively be using a software tool like Open Broadcast Studio [@obs]. The broadcaster could be using WHIP from either the browser or software tool to send media to a cloud-based network for redistribution. Viewers could then use WHAP to connect from their browsers to the cloud-based network to receive and consume audio/video media.
+The WHIP draft [@I-D.ietf-wish-whip, section Abstract] states that WHIP is for the "WebRTC based ingest of content into streaming servics and/or CDNs." 
+So, let's imagine an end-to-end real-time broadcast originating in Madrid and terminating in Los Angeles. The broadcast might start in a browser in Madrid where audio/video is carried using WebRTC. This WebRTC session could be setup to a cloud-based SFU using WHIP. Viewers could then use WHAP to connect from their browsers to the cloud-based SFU to receive and consume the audio/video media.
 
 
 # Use Cases {#usecases}
@@ -110,7 +110,7 @@ If a single SFU is receiving a broadcast via WHIP, it might be desirable to re-t
 
 ## WebRTC Based Video Routing Switching
 
-Just as SDI video routing switchers are common in live production facilities today, WebRTC video routing switchers could be very useful. One might imagine two sets of SFUs: the ingress-SFUs and the egress-SFUs. Stream senders connect (via WHIP) to the ingress of the ingress-SFUs, stream viewers would connect (via WHAP) to the egress of the egress-SFUs. Then routing connections could be made between the ingress and egress SFUs, which changes what stream viewers receive. These routing connections could be made with WHIP or WHAP. By using WHAP, the typicall model of having multiple receivers connect their sources is followed, this is usually done to simplify service discovery and address management.
+Just as SDI video routing switchers are common in live video production facilities today, WebRTC video routing switchers could be very useful. One might imagine two sets of SFUs: the ingress-SFUs and the egress-SFUs. Stream senders connect (via WHIP) to the ingress of the ingress-SFUs, stream viewers would connect (via WHAP) to the egress of the egress-SFUs. Then routing connections could be made between the ingress and egress SFUs, which would change what stream viewers are receiving. These routing connections could be made with WHIP or WHAP. By using WHAP, the typical model of having multiple receivers connect to their sources is followed. This is usually done to simplify operations.
 
 
 # Protocol Operation
