@@ -1,0 +1,336 @@
+
+
+
+
+Network Working Group                                         C. Elliott
+Internet-Draft                                        Elliott Consulting
+Intended status: Informational                                 S. DuBois
+Expires: 12 May 2022                                  Twitch Interactive
+                                                         8 November 2021
+
+
+                      WebRTC HTTPS Access Protocol
+                         draft-elliott-whap-00
+
+Abstract
+
+   WebRTC is a set of APIs and protocols which enable real-time audio,
+   video and data commnications.  WebRTC was purposely designed without
+   complete end-to-end signaling protcols for creating WebRTC sessions.
+   WHAP stands for WebRTC HTTP/S Access Protocol.  WHAP is intended to
+   provide a simple HTTP/S based signaling method to setup one-way media
+   and data sessions between two WebRTC participants.  While inspired by
+   and sharing some similarities with WHIP [I-D.ietf-wish-whip], in
+   constrast to WHIP, WHAP media receivers dial out to senders, and WHAP
+   supports HTTP in trusted environments for cloud-native scaling of
+   SFUs.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 12 May 2022.
+
+Copyright Notice
+
+   Copyright (c) 2021 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 1]
+
+Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
+
+
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Conventions and Definitions . . . . . . . . . . . . . . . . .   3
+   3.  Comparison to WHIP: WebRTC HTTP Ingress Protocol  . . . . . .   3
+     3.1.  WHIP is for Cloud Ingest, WHAP is for Cloud Egress  . . .   4
+   4.  Use Cases . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     4.1.  Content Distribution Network (CDN) to Media Viewer
+           Access  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     4.2.  CDN to CDN WHAP Media Access  . . . . . . . . . . . . . .   4
+     4.3.  Chaining of SFUs to Scale WebRTC Broadcasts . . . . . . .   4
+     4.4.  WebRTC Based Video Routing Switching  . . . . . . . . . .   5
+   5.  Protocol Operation  . . . . . . . . . . . . . . . . . . . . .   5
+     5.1.  SDP Exchange Basics . . . . . . . . . . . . . . . . . . .   5
+     5.2.  Interactive Connectivity Establishment (ICE) Rules  . . .   5
+     5.3.  Network address translation (NAT) . . . . . . . . . . . .   5
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .   5
+   9.  Manageability Considerations  . . . . . . . . . . . . . . . .   5
+   10. Normative References  . . . . . . . . . . . . . . . . . . . .   5
+   11. Informative References  . . . . . . . . . . . . . . . . . . .   5
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+
+1.  Introduction
+
+   This document is intended to define a signaling protocol for WebRTC
+   for one-way audio, video and data sessions based upon HTTP or HTTPS:
+   WebRTC HTTP Access Protocol or "WHAP".
+
+   While WebRTC specifies the usage of SDPs [RFC8866] and an Offer/
+   Answer model [RFC3264] for creating connections, WebRTC does not
+   define the precise signaling protocols over which SDPs should be
+   exchanged [RFC8825].  In order to establish a WebRTC session between
+   two WebRTC entities, a signaling protocol is usually used to exchange
+   SDPs.
+
+   A simple HTTP/S signaling protocol for WebRTC can be beneficial for
+   different applications.  One application is that of end-user media
+   viewer access.  In this case a person might be watching real-time
+   audio/video material via WebRTC.  Another example application is
+   composing clusters of selective forwarding units (SFUs) in order to
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 2]
+
+Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
+
+
+   enable large-scale real-time WebRTC broadcasting beyond the capacity
+   of single SFU limits.  Finally, even bidirectional real-time
+   conferencing scenarios may benefit from HTTP/S signalling: if setting
+   up one-way audio/video streams if very simple, there may be use cases
+   where setting up two one-way streams solves bi-directional remote
+   viewing needs.
+
+   End-users could benefit by using a browser and HTTPS signaling to
+   view real-time media from different media providers as long as their
+   browser application supports the same signaling protocol as the
+   different vendors offering the real-time audio/video feeds.
+
+   Real-time audio/video media providers of course benefit by being able
+   to more easily provide media feeds to media viewers and receiving
+   systems.
+
+   Developers and dev-ops persons could benefit by chaining SFUs
+   together using HTTP signaling in trusted environments in order to
+   create clusters of SFUs able to support large-scale real-time
+   broadcasting.
+
+   Developers of AI and machine learning systems consuming audio/video
+   can benefit by using a common HTTP/S signaling protocol, as they can
+   now ingest media from cameras and even audio/video pre-processors
+   that might be sources from 3rd parties.
+
+   For further information on WebRTC and how signaling protocols fit
+   into the overall scheme of WebRTC, a good place to start is
+   [RFC8825], "Overview: Real-Time Protocols for Browser-Based
+   Applications"
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Comparison to WHIP: WebRTC HTTP Ingress Protocol
+
+   WHIP is the WebRTC HTTP Ingress Protocol, an IETF draft:
+   [I-D.ietf-wish-whip].  It is natural to ask what is the different
+   between WHIP and WHAP?  We believe that WHIP and WHAP are
+   complementary, and mostly do not compete for the same use-cases.
+   WHAP was partly inspired by WHIP.
+
+
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 3]
+
+Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
+
+
+3.1.  WHIP is for Cloud Ingest, WHAP is for Cloud Egress
+
+   The WHIP draft Abstract states "WebRTC based ingest of content into
+   streaming servics and/or CDNs."  So, let's imagine an end-to-end
+   real-time broadcast originating in Madrid and terminating in Los
+   Angeles.  The broadcast might start in a browser in Madrid where
+   audio/video is carried using WebRTC.  The broadcaster could
+   alternatively be using a software tool like Open Broadcast Studio
+   [obs].  The broadcaster could be using WHIP from either the browser
+   or software tool to send media to a cloud-based network for
+   redistribution.  Viewers could then use WHAP to connect from their
+   browsers to the cloud-based network to receive and consume audio/
+   video media.
+
+4.  Use Cases
+
+   There a are number of different use cases for WHAP.
+
+4.1.  Content Distribution Network (CDN) to Media Viewer Access
+
+   If a WebRTC broadcast is originating in Madrid, and being sent (using
+   WHIP) to a WebRTC CDN in Berlin, viewers in Los Angeles might
+   directly access the broadcast using WHAP by dialing directly into the
+   SFU(s) in Berlin.
+
+4.2.  CDN to CDN WHAP Media Access
+
+   WHAP could facilitate SFU to SFU streaming using an on-demand model.
+   Let's say a broadcaster in a town in Spain initiates a WebRTC
+   broadcast.  The broadcaster might connect using WHIP to an SFU that
+   is part of a CDN in Madrid.  If the broadcast has a large number of
+   viewers, and the CDN has many global points of presence, the CDN
+   could direct viewers in the western US to connect to their local WHAP
+   SFU (in say, Los Angeles), which could then WHAP-ingress-dial the SFU
+   in Madrid in order to forward real-time media.
+
+4.3.  Chaining of SFUs to Scale WebRTC Broadcasts
+
+   If a single SFU is receiving a broadcast via WHIP, it might be
+   desirable to re-transmit that broadcast to multiple SFUs to increase
+   the number of viewers possible.  If the root receiving SFU is able to
+   handle WHAP signaling for output streams then additional SFUs can be
+   chained to the root SFU by using WHAP to connect to the root SFU for
+   their ingress stream.
+
+
+
+
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 4]
+
+Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
+
+
+4.4.  WebRTC Based Video Routing Switching
+
+   Just as SDI video routing switchers are common in live production
+   facilities today, WebRTC video routing switchers could be very
+   useful.  One might imagine two sets of SFUs: the ingress-SFUs and the
+   egress-SFUs.  Stream senders connect (via WHIP) to the ingress of the
+   ingress-SFUs, stream viewers would connect (via WHAP) to the egress
+   of the egress-SFUs.  Then routing connections could be made between
+   the ingress and egress SFUs, which changes what stream viewers
+   receive.  These routing connections could be made with WHIP or WHAP.
+   By using WHAP, the typicall model of having multiple receivers
+   connect their sources is followed, this is usually done to simplify
+   service discovery and address management.
+
+5.  Protocol Operation
+
+5.1.  SDP Exchange Basics
+
+5.2.  Interactive Connectivity Establishment (ICE) Rules
+
+5.3.  Network address translation (NAT)
+
+6.  Security Considerations
+
+   Coming soon.
+
+7.  IANA Considerations
+
+   This document has no IANA actions.
+
+8.  Implementation Status
+
+   Coming soon.
+
+9.  Manageability Considerations
+
+   This document has no Manageability Considerations yet.
+
+10.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+11.  Informative References
+
+
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 5]
+
+Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
+
+
+   [I-D.ietf-wish-whip]
+              Murillo, S. G. and A. Gouaillard, "WebRTC-HTTP ingestion
+              protocol (WHIP)", Work in Progress, Internet-Draft, draft-
+              ietf-wish-whip-01, 20 October 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wish-
+              whip-01>.
+
+   [RFC3264]  Rosenberg, J. and H. Schulzrinne, "An Offer/Answer Model
+              with Session Description Protocol (SDP)", RFC 3264,
+              DOI 10.17487/RFC3264, June 2002,
+              <https://www.rfc-editor.org/info/rfc3264>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8825]  Alvestrand, H., "Overview: Real-Time Protocols for
+              Browser-Based Applications", RFC 8825,
+              DOI 10.17487/RFC8825, January 2021,
+              <https://www.rfc-editor.org/info/rfc8825>.
+
+   [RFC8866]  Begen, A., Kyzivat, P., Perkins, C., and M. Handley, "SDP:
+              Session Description Protocol", RFC 8866,
+              DOI 10.17487/RFC8866, January 2021,
+              <https://www.rfc-editor.org/info/rfc8866>.
+
+   [obs]      "Open Broadcaster Software", <https://obsproject.com/>.
+
+Authors' Addresses
+
+   Cameron Elliott
+   Elliott Consulting
+
+   Email: cameron@cameronelliott.com
+
+
+   Sean DuBois
+   Twitch Interactive
+
+   Email: sean@pion.ly
+
+
+
+
+
+
+
+
+
+
+
+Elliott & DuBois           Expires 12 May 2022                  [Page 6]
