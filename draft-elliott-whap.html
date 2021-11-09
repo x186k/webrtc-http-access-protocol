@@ -1351,8 +1351,8 @@ li > p:last-of-type {
       </h2>
 <p id="section-1-1">This document is intended to define a signaling protocol for WebRTC for one-way audio, video and data sessions based upon HTTP or HTTPS: WebRTC HTTP Access Protocol or "WHAP".<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">While WebRTC specifies the usage of SDPs <span>[<a href="#RFC8866" class="xref">RFC8866</a>]</span> and an Offer/Answer model <span>[<a href="#RFC3264" class="xref">RFC3264</a>]</span> for creating connections, WebRTC does not define the precise signaling protocols over which SDPs should be exchanged <span>[<a href="#RFC8825" class="xref">RFC8825</a>]</span>. In order to establish a WebRTC session between two WebRTC entities, a signaling protocol is usually used to exchange SDPs.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">A simple HTTP/S signaling protocol for WebRTC can be beneficial for different applications. One application is that of end-user media viewer access. In this case a person might be watching real-time audio/video material via WebRTC. Another example application is composing clusters of selective forwarding units (SFUs) in order to enable large-scale real-time WebRTC broadcasting beyond the capacity of single SFU limits.  Finally, even bidirectional real-time conferencing scenarios may benefit from HTTP/S signalling: if setting up one-way audio/video streams if very simple, there may be use cases where setting up two one-way streams solves bi-directional remote viewing needs.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">End-users could benefit by using a browser and HTTPS signaling to view real-time media from different media providers as long as their browser application supports the same signaling protocol as the different vendors offering the real-time audio/video feeds.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-3">A simple HTTP/S signaling protocol for WebRTC can be beneficial for different applications. One application is that of end-user media viewer access. In this case a person might be watching real-time audio/video material via WebRTC. Another example application is composing clusters of selective forwarding units (SFUs) in order to enable large-scale real-time WebRTC broadcasting beyond the capacity of single SFU limits.  Finally, even bidirectional real-time conferencing scenarios may benefit from HTTP/S signalling: if setting up one-way audio/video streams is very simple, there may be use cases where setting up two one-way streams solves bi-directional remote viewing needs.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">End-users can benefit by using a browser and HTTPS signaling to view real-time media from different media providers as long as their browser application supports the same signaling protocol as the different vendors offering the real-time audio/video feeds.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Real-time audio/video media providers of course benefit by being able to more easily provide media feeds to media viewers and receiving systems.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">Developers and dev-ops persons could benefit by chaining SFUs together using HTTP signaling in trusted environments in order to create clusters of SFUs able to support large-scale real-time broadcasting.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">Developers of AI and machine learning systems consuming audio/video can benefit by using a common HTTP/S signaling protocol, as they can now ingest media from cameras and even audio/video pre-processors that might be sources from 3rd parties.<a href="#section-1-7" class="pilcrow">¶</a></p>
@@ -1375,7 +1375,7 @@ when, and only when, they appear in all capitals, as shown here.<a href="#sectio
       <h2 id="name-comparison-to-whip-webrtc-h">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-comparison-to-whip-webrtc-h" class="section-name selfRef">Comparison to WHIP: WebRTC HTTP Ingress Protocol</a>
       </h2>
-<p id="section-3-1">WHIP is the WebRTC HTTP Ingress Protocol, an IETF draft: <span>[<a href="#I-D.ietf-wish-whip" class="xref">I-D.ietf-wish-whip</a>]</span>.
+<p id="section-3-1">WHIP is the WebRTC HTTP Ingress Protocol, described in the IETF draft: <span>[<a href="#I-D.ietf-wish-whip" class="xref">I-D.ietf-wish-whip</a>]</span>.
 It is natural to ask what is the different between WHIP and WHAP?
 We believe that WHIP and WHAP are complementary, and mostly do not compete for the same use-cases. WHAP was partly inspired by WHIP.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="whip-is-for-cloud-ingest-whap-is-for-cloud-egress">
@@ -1383,8 +1383,8 @@ We believe that WHIP and WHAP are complementary, and mostly do not compete for t
         <h3 id="name-whip-is-for-cloud-ingest-wh">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-whip-is-for-cloud-ingest-wh" class="section-name selfRef">WHIP is for Cloud Ingest, WHAP is for Cloud Egress</a>
         </h3>
-<p id="section-3.1-1">The WHIP draft <a href="https://datatracker.ietf.org/doc/html/draft-ietf-wish-whip-01" class="relref">Abstract</a> states "WebRTC based ingest of content into streaming servics and/or CDNs."
-So, let's imagine an end-to-end real-time broadcast originating in Madrid and terminating in Los Angeles. The broadcast might start in a browser in Madrid where audio/video is carried using WebRTC. The broadcaster could alternatively be using a software tool like Open Broadcast Studio <span>[<a href="#obs" class="xref">obs</a>]</span>. The broadcaster could be using WHIP from either the browser or software tool to send media to a cloud-based network for redistribution. Viewers could then use WHAP to connect from their browsers to the cloud-based network to receive and consume audio/video media.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">The WHIP draft <a href="https://datatracker.ietf.org/doc/html/draft-ietf-wish-whip-01" class="relref">Abstract</a> states that WHIP is for the "WebRTC based ingest of content into streaming servics and/or CDNs."
+So, let's imagine an end-to-end real-time broadcast originating in Madrid and terminating in Los Angeles. The broadcast might start in a browser in Madrid where audio/video is carried using WebRTC. This WebRTC session could be setup to a cloud-based SFU using WHIP. Viewers could then use WHAP to connect from their browsers to the cloud-based SFU to receive and consume the audio/video media.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1424,7 +1424,7 @@ So, let's imagine an end-to-end real-time broadcast originating in Madrid and te
         <h3 id="name-webrtc-based-video-routing-">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-webrtc-based-video-routing-" class="section-name selfRef">WebRTC Based Video Routing Switching</a>
         </h3>
-<p id="section-4.4-1">Just as SDI video routing switchers are common in live production facilities today, WebRTC video routing switchers could be very useful. One might imagine two sets of SFUs: the ingress-SFUs and the egress-SFUs. Stream senders connect (via WHIP) to the ingress of the ingress-SFUs, stream viewers would connect (via WHAP) to the egress of the egress-SFUs. Then routing connections could be made between the ingress and egress SFUs, which changes what stream viewers receive. These routing connections could be made with WHIP or WHAP. By using WHAP, the typicall model of having multiple receivers connect their sources is followed, this is usually done to simplify service discovery and address management.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-1">Just as SDI video routing switchers are common in live video production facilities today, WebRTC video routing switchers could be very useful. One might imagine two sets of SFUs: the ingress-SFUs and the egress-SFUs. Stream senders connect (via WHIP) to the ingress of the ingress-SFUs, stream viewers would connect (via WHAP) to the egress of the egress-SFUs. Then routing connections could be made between the ingress and egress SFUs, which would change what stream viewers are receiving. These routing connections could be made with WHIP or WHAP. By using WHAP, the typical model of having multiple receivers connect to their sources is followed. This is usually done to simplify operations.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1522,12 +1522,8 @@ So, let's imagine an end-to-end real-time broadcast originating in Madrid and te
 <span class="refAuthor">Alvestrand, H.</span>, <span class="refTitle">"Overview: Real-Time Protocols for Browser-Based Applications"</span>, <span class="seriesInfo">RFC 8825</span>, <span class="seriesInfo">DOI 10.17487/RFC8825</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8825">https://www.rfc-editor.org/info/rfc8825</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8866">[RFC8866]</dt>
-      <dd>
-<span class="refAuthor">Begen, A.</span>, <span class="refAuthor">Kyzivat, P.</span>, <span class="refAuthor">Perkins, C.</span>, and <span class="refAuthor">M. Handley</span>, <span class="refTitle">"SDP: Session Description Protocol"</span>, <span class="seriesInfo">RFC 8866</span>, <span class="seriesInfo">DOI 10.17487/RFC8866</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8866">https://www.rfc-editor.org/info/rfc8866</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="obs">[obs]</dt>
     <dd>
-<span class="refTitle">"Open Broadcaster Software"</span>, <span>&lt;<a href="https://obsproject.com/">https://obsproject.com/</a>&gt;</span>. </dd>
+<span class="refAuthor">Begen, A.</span>, <span class="refAuthor">Kyzivat, P.</span>, <span class="refAuthor">Perkins, C.</span>, and <span class="refAuthor">M. Handley</span>, <span class="refTitle">"SDP: Session Description Protocol"</span>, <span class="seriesInfo">RFC 8866</span>, <span class="seriesInfo">DOI 10.17487/RFC8866</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8866">https://www.rfc-editor.org/info/rfc8866</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

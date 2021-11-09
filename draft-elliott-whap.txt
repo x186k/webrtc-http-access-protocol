@@ -117,12 +117,12 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
    enable large-scale real-time WebRTC broadcasting beyond the capacity
    of single SFU limits.  Finally, even bidirectional real-time
    conferencing scenarios may benefit from HTTP/S signalling: if setting
-   up one-way audio/video streams if very simple, there may be use cases
+   up one-way audio/video streams is very simple, there may be use cases
    where setting up two one-way streams solves bi-directional remote
    viewing needs.
 
-   End-users could benefit by using a browser and HTTPS signaling to
-   view real-time media from different media providers as long as their
+   End-users can benefit by using a browser and HTTPS signaling to view
+   real-time media from different media providers as long as their
    browser application supports the same signaling protocol as the
    different vendors offering the real-time audio/video feeds.
 
@@ -155,9 +155,9 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
 
 3.  Comparison to WHIP: WebRTC HTTP Ingress Protocol
 
-   WHIP is the WebRTC HTTP Ingress Protocol, an IETF draft:
-   [I-D.ietf-wish-whip].  It is natural to ask what is the different
-   between WHIP and WHAP?  We believe that WHIP and WHAP are
+   WHIP is the WebRTC HTTP Ingress Protocol, described in the IETF
+   draft: [I-D.ietf-wish-whip].  It is natural to ask what is the
+   different between WHIP and WHAP?  We believe that WHIP and WHAP are
    complementary, and mostly do not compete for the same use-cases.
    WHAP was partly inspired by WHIP.
 
@@ -172,17 +172,14 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
 
 3.1.  WHIP is for Cloud Ingest, WHAP is for Cloud Egress
 
-   The WHIP draft Abstract states "WebRTC based ingest of content into
-   streaming servics and/or CDNs."  So, let's imagine an end-to-end
-   real-time broadcast originating in Madrid and terminating in Los
-   Angeles.  The broadcast might start in a browser in Madrid where
-   audio/video is carried using WebRTC.  The broadcaster could
-   alternatively be using a software tool like Open Broadcast Studio
-   [obs].  The broadcaster could be using WHIP from either the browser
-   or software tool to send media to a cloud-based network for
-   redistribution.  Viewers could then use WHAP to connect from their
-   browsers to the cloud-based network to receive and consume audio/
-   video media.
+   The WHIP draft Abstract states that WHIP is for the "WebRTC based
+   ingest of content into streaming servics and/or CDNs."  So, let's
+   imagine an end-to-end real-time broadcast originating in Madrid and
+   terminating in Los Angeles.  The broadcast might start in a browser
+   in Madrid where audio/video is carried using WebRTC.  This WebRTC
+   session could be setup to a cloud-based SFU using WHIP.  Viewers
+   could then use WHAP to connect from their browsers to the cloud-based
+   SFU to receive and consume the audio/video media.
 
 4.  Use Cases
 
@@ -221,6 +218,9 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
 
 
 
+
+
+
 Elliott & DuBois           Expires 12 May 2022                  [Page 4]
 
 Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
@@ -228,17 +228,17 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
 
 4.4.  WebRTC Based Video Routing Switching
 
-   Just as SDI video routing switchers are common in live production
-   facilities today, WebRTC video routing switchers could be very
-   useful.  One might imagine two sets of SFUs: the ingress-SFUs and the
-   egress-SFUs.  Stream senders connect (via WHIP) to the ingress of the
-   ingress-SFUs, stream viewers would connect (via WHAP) to the egress
-   of the egress-SFUs.  Then routing connections could be made between
-   the ingress and egress SFUs, which changes what stream viewers
-   receive.  These routing connections could be made with WHIP or WHAP.
-   By using WHAP, the typicall model of having multiple receivers
-   connect their sources is followed, this is usually done to simplify
-   service discovery and address management.
+   Just as SDI video routing switchers are common in live video
+   production facilities today, WebRTC video routing switchers could be
+   very useful.  One might imagine two sets of SFUs: the ingress-SFUs
+   and the egress-SFUs.  Stream senders connect (via WHIP) to the
+   ingress of the ingress-SFUs, stream viewers would connect (via WHAP)
+   to the egress of the egress-SFUs.  Then routing connections could be
+   made between the ingress and egress SFUs, which would change what
+   stream viewers are receiving.  These routing connections could be
+   made with WHIP or WHAP.  By using WHAP, the typical model of having
+   multiple receivers connect to their sources is followed.  This is
+   usually done to simplify operations.
 
 5.  Protocol Operation
 
@@ -308,8 +308,6 @@ Internet-Draft        WebRTC HTTPS Access Protocol         November 2021
               DOI 10.17487/RFC8866, January 2021,
               <https://www.rfc-editor.org/info/rfc8866>.
 
-   [obs]      "Open Broadcaster Software", <https://obsproject.com/>.
-
 Authors' Addresses
 
    Cameron Elliott
@@ -322,6 +320,8 @@ Authors' Addresses
    Twitch Interactive
 
    Email: sean@pion.ly
+
+
 
 
 
